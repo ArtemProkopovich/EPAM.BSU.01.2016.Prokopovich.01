@@ -29,20 +29,82 @@ namespace Logic
             if (power < 0)
             {
                 negativePower = true;
-                power = Math.Abs(power);
-                result = 1 / number / power;
+                power = Abs(power);
             }
             double temp = 0;
-            while (Math.Abs(result - temp) > accuracy && iterationCount > 0)
+            while (Abs(result - temp) > accuracy && iterationCount > 0)
             {
                 temp = result;
-                result = (1 / power) * ((power - 1) * result + number / Math.Pow(result, power - 1));
+                result = (1 / power) * ((power - 1) * result + number / Power(result, power - 1));
                 iterationCount--;
             }
             if (negativePower)
                 result = 1 / result;
             if (double.IsNaN(result) || iterationCount == 0)
                 throw new Exception("Невозможно вычислить значение.");
+            return result;
+        }
+
+        private static double Abs(double number)
+        {
+            if (number < 0)
+                return -number;
+            else
+                return number;
+        }
+
+        private static double Power(double number, double degree, double accuracy = 0.0000001)
+        {
+            bool reverseNumber = false;
+            if (number > 1)
+            {
+                reverseNumber = true;
+                number = 1 / number;
+            }
+            number = number - 1;
+            double result = 1 + degree * number;
+            double temp = 0;
+            int count = 2;
+            while (Abs(result - temp) > accuracy && count < 15)
+            {
+                temp = result;
+                result += NegFactorial(degree, count) / Factorial(count) * IntPower(number, count);
+                count++;
+            }
+            if (reverseNumber)
+                result =  1 / result;
+            return Abs(result);
+        }
+
+        private static double IntPower(double number, int power)
+        {
+            double result = 1;
+            while (power > 0)
+            {
+                if (power % 2 == 1)
+                    result *= number;
+                number *= number;
+                power = power / 2;
+            }
+            return result;
+
+        }
+
+        private static double NegFactorial(double number, int count)
+        {
+            double result = 1;
+            for (int i = 0; i < count; i++)
+            {
+                result *= number - i;
+            }
+            return result;
+        }
+
+        private static double Factorial(int number)
+        {
+            double result = 1;
+            for (int i = 1; i <= number; i++)
+                result *= i;
             return result;
         }
     }
