@@ -6,142 +6,38 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class ArraySort
+    public static class ArraySort
     {
-        public enum OrderBy { increase, decrease }
-        public enum Condition { Sum, Max, Min }
-
-        private delegate int? Function(int[] array);
-        private delegate bool Order(int? num1, int? num2);
-
         /// <summary>
-        /// Сортирует двумерный массив по указанному признаку в указанном порядке.
-        /// </summary>
-        /// <param name="array">Массив целых чисел.</param>
-        /// <param name="condition">Условие сортировки.</param>
-        /// <param name="order">Порядок соритровки.</param>
-        public void Sort(int[][] array, Condition condition, OrderBy order)
-        {
-            if (array == null)
-                return;
-            if (array.Count() == 0)
-                return;
-            Order orderFunc;
-            if (order == OrderBy.increase)
-                orderFunc = IsSmaller;
-            else
-                orderFunc = IsLarger;
-            switch (condition)
-            {
-                case Condition.Sum: Sort(array, Sum, orderFunc); break;
-                case Condition.Max: Sort(array, Max, orderFunc); break;
-                case Condition.Min: Sort(array, Min, orderFunc); break;
-            }
-        }
-
-        /// <summary>
-        /// Соритрует двумерный массив по заданной функции значения и заданной функции упорядочивания
+        /// Соритрует двумерный массив по заданной функции значения и заданному компаратору.
         /// </summary>
         /// <param name="array">Массив чисел</param>
-        /// <param name="func">Функция значения</param>
-        /// <param name="order">Функция упорядочивания</param>
-        private void Sort(int[][] array, Function func, Order order)
+        /// <param name="keyFunc">Функция вычисления значения ключей для строк массива</param>
+        /// <param name="comparer">Компаратор по значениям ключей</param>
+        public static void Sort<T1, T2>(T1[][] array, Func<T1[], T2> keyFunc, Comparer<T2> comparer)
         {
-            int?[] valueArray = new int?[array.Count()];
+            T2[] valueArray = new T2[array.Count()];
             for (int i = 0; i < valueArray.Length; i++)
-                valueArray[i] = func(array[i]);
+                valueArray[i] = keyFunc(array[i]);
 
             for (int i = 0; i < valueArray.Length - 1; i++)
             {
                 for (int j = i + 1; j < valueArray.Length; j++)
                 {
-                    if (order(valueArray[j], valueArray[i]))
+                    if (comparer.Compare(valueArray[j], valueArray[i]) < 0)
                     {
-                        int[] tempArray = array[i];
-                        array[i] = array[j];
-                        array[j] = tempArray;
-
-                        int? temp = valueArray[i];
-                        valueArray[i] = valueArray[j];
-                        valueArray[j] = temp;
+                        Swap(ref array[i],ref array[j]);
+                        Swap(ref valueArray[i],ref valueArray[j]);
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// Возвращает минимальное значение в целочисленном массиве.
-        /// </summary>
-        /// <param name="array">Массив целых чисел</param>
-        /// <returns></returns>
-        public int? Min(int[] array)
+        private static void Swap<T>(ref T obj1, ref T obj2)
         {
-            if (array == null)
-                return null;
-
-            int temp = array.Length == 0 ? int.MinValue : int.MaxValue;
-            foreach (int i in array)
-                if (i < temp)
-                    temp = i;
-            return temp;
-        }
-
-        /// <summary>
-        /// Возвращает максимальное значение в массиве
-        /// </summary>
-        /// <param name="array">Массив целых чисел</param>
-        /// <returns></returns>
-        public int? Max(int[] array)
-        {
-            if (array == null)
-                return null;
-
-            int temp = array.Length == 0 ? 0 : int.MinValue;
-            foreach (int i in array)
-                if (i > temp)
-                    temp = i;
-            return temp;
-        }
-
-        /// <summary>
-        /// Возвращает сумму элементов в массиве
-        /// </summary>
-        /// <param name="array">Массив целых чисел</param>
-        /// <returns></returns>
-        public int? Sum(int[] array)
-        {
-            if (array == null)
-                return null;
-
-            int temp = 0;
-            foreach (int i in array)
-                temp += i;
-            return temp;
-        }
-
-        private bool IsLarger(int? num1, int? num2)
-        {
-            if (num1 == null && num2 == null)
-                return false;
-            else if (num1 == null)
-                return false;
-            else if (num2 == null)
-                return true;
-            else
-                return num1 > num2;
-
-        }
-
-        private bool IsSmaller(int? num1, int? num2)
-        {
-            if (num1 == null && num2 == null)
-                return false;
-            else if (num1 == null)
-                return true;
-            else if (num2 == null)
-                return false;
-            else
-                return num1 < num2;
+            T temp = obj2;
+            obj2 = obj1;
+            obj1 = temp;
         }
     }
 }

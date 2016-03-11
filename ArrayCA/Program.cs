@@ -12,17 +12,12 @@ namespace ArrayCA
         static Random random = new Random();
         static int[][] RandomArray()
         {
-            if (random.Next(10) == 0)
-                return null;
-            int[][] result = new int[random.Next(10)][];
+            int[][] result = new int[random.Next(1, 10)][];
             for (int i = 0; i < result.Count(); i++)
             {
-                if (random.Next(5) != 0)
-                {
-                    result[i] = new int[random.Next(10)];
-                    for (int j = 0; j < result[i].Length; j++)
-                        result[i][j] = random.Next(10);
-                }
+                result[i] = new int[random.Next(1, 10)];
+                for (int j = 0; j < result[i].Length; j++)
+                    result[i][j] = random.Next(20);
             }
             return result;
         }
@@ -54,17 +49,13 @@ namespace ArrayCA
         static void Main(string[] args)
         {
             int[][] array = null;
-            ArraySort sort = new ArraySort();
             for (int i = 0; i < 10; i++)
             {
                 array = RandomArray();
                 Console.WriteLine("Исходный массив: ");
                 Console.WriteLine(PrintArray(array));
-
-                ArraySort.Condition cond = (ArraySort.Condition)random.Next(3);
-                ArraySort.OrderBy order =  (ArraySort.OrderBy)random.Next(2);
-                sort.Sort(array, cond, order);
-                Console.WriteLine($"Отсортированный массив по {cond} и по {order}: ");
+                ArraySort.Sort(array, e => e.Max(), Comparer<int>.Default);
+                Console.WriteLine($"Отсортированный массив по максимуму и по дефолту: ");
                 Console.WriteLine(PrintArray(array));
             }
             Console.ReadLine();
