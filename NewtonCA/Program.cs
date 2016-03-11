@@ -19,10 +19,10 @@ namespace NewtonCA
                     Console.WriteLine("Введите число: ");
                     double number = double.Parse(Console.ReadLine());
                     Console.WriteLine("Введите степень: ");
-                    double power = double.Parse(Console.ReadLine());
+                    int power = int.Parse(Console.ReadLine());
                     double result = Newton.Root(number, power);
                     Console.WriteLine($"Метод Ньютона: Корень числа {number} степени {power} равен {result}");
-                    Console.WriteLine($"Math.Pow: Корень числа {number} степени {power} равен {Math.Pow(number, 1 / power)}");
+                    Console.WriteLine($"Math.Pow: Корень числа {number} степени {power} равен {Math.Pow(number, 1.0 / power)}");
                 }
                 catch (Exception ex)
                 {
