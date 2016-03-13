@@ -30,7 +30,7 @@ namespace Logic
                 negativePower = true;
                 power = Math.Abs(power);
             }
-            double temp = 0;
+            double temp = (result < accuracy) ? 1 : 0;
             while (Math.Abs(result - temp) > accuracy)
             {
                 temp = result;
