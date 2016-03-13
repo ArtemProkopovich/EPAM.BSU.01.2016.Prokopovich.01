@@ -38,7 +38,7 @@ namespace Logic
             }
             if (negativePower)
                 result = 1.0 / result;
-            if (double.IsNaN(result))
+            if (double.IsNaN(result) || double.IsNegativeInfinity(result) || double.IsPositiveInfinity(result))
                 throw new Exception("Невозможно вычислить значение.");
             return result;
         }
