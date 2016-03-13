@@ -23,6 +23,8 @@ namespace Logic
                 throw new ArgumentException("Невозможно извлечь корень 0-ой степени");
             if (accuracy == 0)
                 throw new ArgumentException("Невозможно достигнуть заданной точности");
+            if (number == 0)
+                return 0;
             double result = number / power;
             bool negativePower = false;
             if (power < 0)
@@ -39,7 +41,7 @@ namespace Logic
             if (negativePower)
                 result = 1.0 / result;
             if (double.IsNaN(result) || double.IsNegativeInfinity(result) || double.IsPositiveInfinity(result))
-                throw new Exception("Невозможно вычислить значение.");
+                throw new OverflowException("Невозможно вычислить значение.");
             return result;
         }
 
