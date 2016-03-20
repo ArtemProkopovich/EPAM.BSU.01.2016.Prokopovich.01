@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewtonCA", "NewtonCA\Newton
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayCA", "ArrayCA\ArrayCA.csproj", "{A0FB0A01-A457-4AF3-B4E4-FBDC6B4A3BA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortTest", "SortTest\SortTest.csproj", "{F9B769BF-118F-4042-9D98-4E2D13E5DA66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A0FB0A01-A457-4AF3-B4E4-FBDC6B4A3BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0FB0A01-A457-4AF3-B4E4-FBDC6B4A3BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0FB0A01-A457-4AF3-B4E4-FBDC6B4A3BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B769BF-118F-4042-9D98-4E2D13E5DA66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B769BF-118F-4042-9D98-4E2D13E5DA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B769BF-118F-4042-9D98-4E2D13E5DA66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B769BF-118F-4042-9D98-4E2D13E5DA66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
