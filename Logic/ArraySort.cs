@@ -14,20 +14,15 @@ namespace Logic
         /// <param name="array">Массив чисел</param>
         /// <param name="keyFunc">Функция вычисления значения ключей для строк массива</param>
         /// <param name="comparer">Компаратор по значениям ключей</param>
-        public static void Sort<T1, T2>(T1[][] array, Func<T1[], T2> keyFunc, Comparer<T2> comparer)
+        public static void Sort<T1, T2>(T1[][] array, Func<T1[], T1[], int> func)
         {
-            T2[] valueArray = new T2[array.Count()];
-            for (int i = 0; i < valueArray.Length; i++)
-                valueArray[i] = keyFunc(array[i]);
-
-            for (int i = 0; i < valueArray.Length - 1; i++)
+            for (int i = 0; i < array.Count() - 1; i++)
             {
-                for (int j = i + 1; j < valueArray.Length; j++)
+                for (int j = i + 1; j < array.Count(); j++)
                 {
-                    if (comparer.Compare(valueArray[j], valueArray[i]) < 0)
+                    if (func(array[j], array[i]) < 0)
                     {
-                        Swap(ref array[i],ref array[j]);
-                        Swap(ref valueArray[i],ref valueArray[j]);
+                        Swap(ref array[i], ref array[j]);
                     }
                 }
             }
@@ -38,20 +33,15 @@ namespace Logic
         /// </summary>
         /// <param name="array">Массив чисел.</param>
         /// <param name="keyFunc">Интрфейс вычисляющий значения ключей для строк массива.</param>
-        public static void Sort<T1, T2>(T1[][] array, IArrayKey<T1,T2> keyFunc) where T2:IComparable<T2>
+        public static void Sort<T>(T[][] array, IArrayKey<T> keyFunc)
         {
-            T2[] valueArray = new T2[array.Count()];
-            for (int i = 0; i < valueArray.Length; i++)
-                valueArray[i] = keyFunc.GetKey(array[i]);
-
-            for (int i = 0; i < valueArray.Length - 1; i++)
+            for (int i = 0; i < array.Count() - 1; i++)
             {
-                for (int j = i + 1; j < valueArray.Length; j++)
+                for (int j = i + 1; j < array.Count(); j++)
                 {
-                    if (valueArray[j].CompareTo(valueArray[i]) < 0)
+                    if (keyFunc.CompareTo(array[j], array[i]) < 0)
                     {
                         Swap(ref array[i], ref array[j]);
-                        Swap(ref valueArray[i], ref valueArray[j]);
                     }
                 }
             }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public interface IArrayKey<in T1, out T2> where T2 : IComparable<T2>
+    public interface IArrayKey<T>
     {
-        T2 GetKey(T1[] array);
+        int CompareTo(T[] arr1, T[] arr2);
     }
 }
